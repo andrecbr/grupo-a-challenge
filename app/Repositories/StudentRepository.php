@@ -43,4 +43,11 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
         $student->delete();
     }
 
+    public function allLimited(int $perPage): Response
+    {
+        $students = $this->model::paginate($perPage);
+
+        return new Response($students);
+    }
+
 }

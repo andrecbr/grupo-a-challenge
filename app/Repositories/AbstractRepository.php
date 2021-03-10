@@ -22,7 +22,7 @@ abstract class AbstractRepository {
      * @return Response
      */
     public function all() {
-        $students = $this->model::paginate(2);
+        $students = $this->model::paginate();
 
         return new Response($students);
     }

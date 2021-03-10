@@ -22,7 +22,12 @@ class StudentController extends Controller
      */
     public function index(): Response
     {
-        return $this->studentRepository->all();
+        $perPage = request('perPage');
+
+        if ($perPage) {
+            return $this->studentRepository->allLimited($perPage);
+        }
+        return $this->studentRepository->all($perPage);
     }
 
     /**

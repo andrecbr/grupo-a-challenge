@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    public $table = 'student';
+    protected $table = 'student';
     protected $primaryKey = 'ra';
     protected $fillable = ['name', 'email', 'cpf'];
+    protected $perPage = 10;
 }
