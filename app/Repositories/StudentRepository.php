@@ -22,7 +22,9 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
     }
 
     public function show(int $ra) {
-        return $this->model->findOrFail($ra);
+        $student = $this->model->findOrFail($ra);
+
+        return new Response($student);
     }
 
     public function update(Request $request, int $ra): Response
