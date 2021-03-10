@@ -22,6 +22,8 @@ abstract class AbstractRepository {
      * @return Response
      */
     public function all() {
-        return new Response($this->model->all());
+        $students = $this->model::simplePaginate(2);
+
+        return new Response($students);
     }
 }
