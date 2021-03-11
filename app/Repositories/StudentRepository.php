@@ -6,6 +6,8 @@ use App\Models\Student;
 use App\Repositories\Contracts\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use function App\Helpers\stripDotsAndHyphens;
 
 class StudentRepository extends AbstractRepository implements StudentRepositoryInterface {
@@ -14,7 +16,19 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
 
     public function store(Request $request): Response
     {
-        $fields = $request->all();
+        $requestAll = $request->all();
+
+        $validator = Validator::make($requestAll, [
+            'name' => 'required|string|max:50',
+            'email' => 'required|email',
+            'cpf' => 'required|max:11'
+        ]);
+
+        if ($validator->fails()) {
+            return new Response($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
+
+        $fields = $requestAll;
 
         $fields['cpf'] = stripDotsAndHyphens($fields['cpf']);
 
