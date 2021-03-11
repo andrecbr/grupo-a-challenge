@@ -21,7 +21,7 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
         $validator = Validator::make($requestAll, [
             'name' => 'required|string|max:50',
             'email' => 'required|email',
-            'cpf' => 'required|max:11'
+            'cpf' => 'required|max:14'
         ]);
 
         if ($validator->fails()) {
