@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Repositories\Contracts\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use function App\Helpers\stripDotsAndHyphens;
 
 class StudentRepository extends AbstractRepository implements StudentRepositoryInterface {
 
@@ -13,9 +14,12 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
 
     public function store(Request $request): Response
     {
-        $student = new $this->model;
+        $fields = $request->all();
 
-        $student->fill($request->all());
+        $fields['cpf'] = stripDotsAndHyphens($fields['cpf']);
+
+        $student = new $this->model;
+        $student->fill($fields);
         $student->save();
 
         return new Response($student, 201);
@@ -29,9 +33,12 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
 
     public function update(Request $request, int $ra): Response
     {
-        $student = $this->model->findOrFail($ra);
+        $fields = $request->all();
 
-        $student->fill($request->all());
+        $fields['cpf'] = stripDotsAndHyphens($fields['cpf']);
+
+        $student = $this->model->findOrFail($ra);
+        $student->fill($fields);
         $student->save();
 
         return new Response($student);
