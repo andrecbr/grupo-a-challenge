@@ -35,7 +35,7 @@ class StudentRepository extends AbstractRepository implements StudentRepositoryI
     {
         $fields = $request->all();
 
-        $fields['cpf'] = stripDotsAndHyphens($fields['cpf']);
+        unset($fields['cpf']);
 
         $student = $this->model->findOrFail($ra);
         $student->fill($fields);
